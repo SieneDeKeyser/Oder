@@ -1,7 +1,7 @@
 ﻿using System;
 using System.Collections.Generic;
 using System.Text;
-using Oder.Domain.ItemGroups;
+using Oder.Domain.Orders.ItemGroups;
 
 namespace Oder.Services.ItemGroups
 {

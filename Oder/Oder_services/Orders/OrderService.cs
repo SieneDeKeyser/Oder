@@ -1,5 +1,5 @@
 ﻿using Oder.Domain.Customers;
-using Oder.Domain.ItemGroups;
+using Oder.Domain.Orders.ItemGroups;
 using Oder.Domain.Items;
 using Oder.Domain.Orders;
 using Oder.Services.ItemGroups;
@@ -11,24 +11,23 @@ namespace Oder.Services.Orders
 {
     public class OrderService : IOrderService
     {
-        private readonly IItemGroupMapper _itemGroupMapper;
         private readonly IOrderRepository _orderRepository;
         private readonly IItemRepository _itemRepository;
         private readonly ICustomerRepository _customerRepository;
         private readonly IOrderMapper _orderMapper;
 
-        public OrderService(IItemGroupMapper itemGroupMapper,
-                            IOrderRepository orderRepository,
+        public OrderService(IOrderRepository orderRepository,
                             IItemRepository itemRepository,
                             ICustomerRepository customerRepository,
                             IOrderMapper orderMapper)
         {
-            _itemGroupMapper = itemGroupMapper;
             _itemRepository = itemRepository;
             _orderRepository = orderRepository;
             _customerRepository = customerRepository;
             _orderMapper = orderMapper;
         }
+
+
         public OrderDTO CreateNewOrder(OrderDTO newOrderDTO)
         {
             Order newOrder = new Order();
@@ -41,7 +40,7 @@ namespace Oder.Services.Orders
                 itemGroup.ShippingDate = itemGroup.CalculateShippingDate(itemOfThisGroup);
             }
             _orderRepository.AddNewOrder(newOrder);
-
+            newOrder.CalculatePriceOfOrder();
             return _orderMapper.FromOrderToOrderDTO(newOrder);
         }
 

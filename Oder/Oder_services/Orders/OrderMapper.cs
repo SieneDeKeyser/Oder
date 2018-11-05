@@ -1,7 +1,7 @@
 ﻿using System;
 using System.Collections.Generic;
 using System.Text;
-using Oder.Domain.ItemGroups;
+using Oder.Domain.Orders.ItemGroups;
 using Oder.Domain.Orders;
 using Oder.Services.ItemGroups;
 
@@ -34,6 +34,7 @@ namespace Oder.Services.Orders
                 ItemGroup itemGroupFromThisOrder = _itemGroupMapper.FromItemGroupDTOToItemGroup(itemgroupDTO);
                 orderToReturn.ItemGroups.Add(itemGroupFromThisOrder);
             }
+            orderToReturn.
             return orderToReturn;
         }
     }

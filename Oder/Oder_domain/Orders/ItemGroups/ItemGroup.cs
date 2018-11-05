@@ -3,7 +3,7 @@ using System;
 using System.Collections.Generic;
 using System.Text;
 
-namespace Oder.Domain.ItemGroups
+namespace Oder.Domain.Orders.ItemGroups
 {
     public class ItemGroup
     {
