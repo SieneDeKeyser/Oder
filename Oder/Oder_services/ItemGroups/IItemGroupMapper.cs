@@ -7,6 +7,7 @@ namespace Oder.Services.ItemGroups
 {
     public interface IItemGroupMapper
     {
-        ItemGroup FromItemGroupDTOToItem(ItemGroupDTO itemGroupDTO);
+        ItemGroup FromItemGroupDTOToItemGroup(ItemGroupDTO itemGroupDTO);
+        ItemGroupDTO FromItemGroupToItemGroupDTO(ItemGroup itemGroupToMap);
     }
 }

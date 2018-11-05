@@ -1,4 +1,6 @@
-﻿using Oder.Domain.Items;
+﻿using Oder.Domain.Customers;
+using Oder.Domain.ItemGroups;
+using Oder.Domain.Items;
 using Oder.Domain.Orders;
 using Oder.Services.ItemGroups;
 using System;
@@ -12,18 +14,41 @@ namespace Oder.Services.Orders
         private readonly IItemGroupMapper _itemGroupMapper;
         private readonly IOrderRepository _orderRepository;
         private readonly IItemRepository _itemRepository;
+        private readonly ICustomerRepository _customerRepository;
+        private readonly IOrderMapper _orderMapper;
 
-        public OrderService(IItemGroupMapper itemGroupMapper, IOrderRepository orderRepository, IItemRepository itemRepository)
+        public OrderService(IItemGroupMapper itemGroupMapper,
+                            IOrderRepository orderRepository,
+                            IItemRepository itemRepository,
+                            ICustomerRepository customerRepository,
+                            IOrderMapper orderMapper)
         {
             _itemGroupMapper = itemGroupMapper;
             _itemRepository = itemRepository;
             _orderRepository = orderRepository;
+            _customerRepository = customerRepository;
+            _orderMapper = orderMapper;
         }
         public OrderDTO CreateNewOrder(OrderDTO newOrderDTO)
         {
-            throw new NotImplementedException();
+            Order newOrder = new Order();
+            newOrder = _orderMapper.FromOrderDTOToOrder(newOrderDTO);
+            newOrder.CustomerOfThisOrder = SearchCustomer(newOrderDTO.CustomerID);
+            foreach (var itemGroup in newOrder.ItemGroups)
+            {
+                Item itemOfThisGroup = _itemRepository.GetItemBasedOnId(itemGroup.ItemId);
+                itemGroup.TotalPriceItemGroup = itemGroup.CalculateTotalPriceOfItemGroup(itemOfThisGroup);
+                itemGroup.ShippingDate = itemGroup.CalculateShippingDate(itemOfThisGroup);
+            }
+            _orderRepository.AddNewOrder(newOrder);
+
+            return _orderMapper.FromOrderToOrderDTO(newOrder);
         }
 
-        private
+        private Customer SearchCustomer(int idCustomer)
+        {
+            Customer customerOfThisOrder = _customerRepository.GetCustomerById(idCustomer);
+            return null;
+        }
     }
 }

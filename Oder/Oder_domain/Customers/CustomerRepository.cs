@@ -1,5 +1,6 @@
 ﻿using System;
 using System.Collections.Generic;
+using System.Linq;
 using System.Text;
 
 namespace Oder.Domain.Customers
@@ -14,6 +15,11 @@ namespace Oder.Domain.Customers
         public void AddNewCustomer(Customer newCustomer)
         {
             CustomersInDataBase.CustomersDB.Add(newCustomer);
+        }
+
+        public Customer GetCustomerById(int id)
+        {
+            return CustomersInDataBase.CustomersDB.SingleOrDefault(customer => customer.Id == id);
         }
     }
 }
