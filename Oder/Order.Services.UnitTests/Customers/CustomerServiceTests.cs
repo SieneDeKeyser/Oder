@@ -6,7 +6,7 @@ using Oder.Services.Customers;
 using System;
 using Xunit;
 
-namespace Order.Services.CustomerServiceUnitTests
+namespace Order.Services.Customers
 {
     public class CustomerServiceUnitTests
     {
@@ -27,13 +27,7 @@ namespace Order.Services.CustomerServiceUnitTests
             CustomerDTO customerDTO = new CustomerDTO();
             customerDTO.Firstname = "test";
             customerDTO.Lastname = "test";
-            customerDTO.AdressOfCustomer = new Adress()
-            {
-                PostalCode = 1820,
-                City = "Perk",
-                Streetname = "Kerstraat",
-                HouseNumber = 5
-            };
+            customerDTO.AdressOfCustomer = new Adress(1820, "Perk", "kerkstraat", 5);
             customerDTO.Email = "xxx@test.com";
             customerDTO.PhoneNumber = "04/72123456";
 
@@ -42,13 +36,7 @@ namespace Order.Services.CustomerServiceUnitTests
                 customerbuilder.WithFirstName("test")
                                .WithLastname("test")
                                .WithAddress(
-                                    new Adress()
-                                    {
-                                        PostalCode = 1820,
-                                        City = "Perk",
-                                        Streetname = "Kerkstraat",
-                                        HouseNumber = 5
-                                    })
+                                    new Adress(1820, "Perk", "kerkstraat", 5))
                                .WithPhoneNumber("04/721233456")
                                .WithEmailAdress("xxx@test.com")
                                .Build();
@@ -67,13 +55,7 @@ namespace Order.Services.CustomerServiceUnitTests
             //Given
             CustomerDTO customerDTO = new CustomerDTO();
             customerDTO.Lastname = "test";
-            customerDTO.AdressOfCustomer = new Adress()
-            {
-                PostalCode = 1820,
-                City = "Perk",
-                Streetname = "Kerstraat",
-                HouseNumber = 5
-            };
+            customerDTO.AdressOfCustomer = new Adress(1820, "Perk", "kerkstraat", 5);
             customerDTO.Email = "xxx@test.com";
             customerDTO.PhoneNumber = "04/72123456";
 

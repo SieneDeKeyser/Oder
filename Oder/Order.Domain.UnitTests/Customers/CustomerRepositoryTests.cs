@@ -24,13 +24,7 @@ namespace Order.Domain.UnitTests.Customers
                 customerbuilder.WithFirstName("Test")
                                .WithLastname("Test")
                                .WithAddress(
-                                    new Adress()
-                                    {
-                                        PostalCode = 1820,
-                                        City = "Perk",
-                                        Streetname = "Kerkstraat",
-                                        HouseNumber = 5
-                                    })
+                                    new Adress(1820, "Perk", "kerkstraat", 5))
                                .WithPhoneNumber("04/721233456")
                                .WithEmailAdress("test@test.com")
                                .Build();

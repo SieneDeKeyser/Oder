@@ -15,17 +15,11 @@ namespace Order.Domain.UnitTests.Customers
             CustomerBuilder customerbuilder = new CustomerBuilder();
 
             //When
-            Customer customer = 
+            Customer customer =
                 customerbuilder.WithFirstName("Test")
                                .WithLastname("Test")
                                .WithAddress(
-                                    new Adress()
-                                    {
-                                       PostalCode = 1820,
-                                       City = "Perk",
-                                       Streetname = "Kerkstraat",
-                                       HouseNumber = 5
-                                    })
+                                   new Adress(1820, "Perk", "kerkstraat", 5))
                                .WithPhoneNumber("04/721233456")
                                .WithEmailAdress("test@test.com")
                                .Build();

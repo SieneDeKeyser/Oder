@@ -6,6 +6,6 @@ namespace Oder.Domain.Customers
 {
    public interface ICustomerRepository
     {
-        Customer AddNewCustomer(Customer newCustomer);
+        void AddNewCustomer(Customer newCustomer);
     }
 }

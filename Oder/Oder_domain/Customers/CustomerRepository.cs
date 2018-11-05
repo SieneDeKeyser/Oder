@@ -11,10 +11,9 @@ namespace Oder.Domain.Customers
         {
             CustomersInDataBase = new CustomerDB();
         }
-        public Customer AddNewCustomer(Customer newCustomer)
+        public void AddNewCustomer(Customer newCustomer)
         {
             CustomersInDataBase.CustomersDB.Add(newCustomer);
-            return newCustomer;
         }
     }
 }
