@@ -20,9 +20,19 @@ namespace Oder.Services.Customers
         {
             foreach (var item in newCustomerDTO.GetType().GetProperties())
             {
-                if ((item.GetValue(newCustomerDTO) == null))
+                if (item.Name != "Id")
                 {
-                    throw new CustomerInputException();
+                    if ((item.GetValue(newCustomerDTO) == null))
+                    {
+                        throw new CustomerInputException();
+                    }
+                }
+                else
+                {
+                    if ((item.GetValue(newCustomerDTO).ToString() != "-1"))
+                    {
+                        throw new CustomerInputException();
+                    }
                 }
             }
             Customer newCustomer = _customerMapper.FromCustomerDTOToCustomer(newCustomerDTO);

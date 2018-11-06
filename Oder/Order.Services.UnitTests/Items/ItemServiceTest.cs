@@ -67,5 +67,25 @@ namespace Oder.Services.UnitTests.Items
             //then
             Assert.Throws<ItemInputException>(act);
         }
+
+        [Fact]
+        public void GivenNewItemDTOWithGivenId_WhenCreatingNewItem_ThenThrowItemInputException()
+        {
+            //Given
+            ItemDTO newItemDTO = new ItemDTO()
+            {
+                AmountInStock = 5,
+                Price = 10.0,
+                Name = "Test",
+                Description = "Test description",
+                Id = 0
+            };
+
+            //When
+            Action act = () => _itemService.CreateNewItem(newItemDTO);
+
+            //then
+            Assert.Throws<ItemInputException>(act);
+        }
     }
 }

@@ -9,5 +9,11 @@ namespace Oder.Services.Customers
         public string Email { get; set; }
         public Adress AdressOfCustomer { get; set; }
         public string PhoneNumber { get; set; }
+        public int Id { get; set; }
+
+        public CustomerDTO()
+        {
+            Id = -1;
+        }
     }
 }

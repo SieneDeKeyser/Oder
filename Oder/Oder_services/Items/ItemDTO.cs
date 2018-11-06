@@ -11,5 +11,9 @@ namespace Oder.Services.Items
         public double Price { get; set; }
         public int AmountInStock { get; set; }
         public int Id { get; set; }
+        public ItemDTO()
+        {
+            Id = -1;
+        }
     }
 }

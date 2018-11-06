@@ -3,6 +3,7 @@ using System.Collections.Generic;
 using System.Linq;
 using System.Threading.Tasks;
 using Microsoft.AspNetCore.Mvc;
+using Microsoft.Extensions.Logging;
 using Oder.Services.Orders;
 using Oder.Services.Orders.OrderExceptions;
 
@@ -14,10 +15,12 @@ namespace Oder.Api.Controllers
     public class OrdersController : Controller
     {
         private readonly IOrderService _orderService;
+        private readonly ILogger<OrdersController> _orderLogger;
 
-        public OrdersController(IOrderService orderService)
+        public OrdersController(IOrderService orderService, ILogger<OrdersController> orderLogger)
         {
             _orderService = orderService;
+            _orderLogger = orderLogger;
         }
         // GET: api/<controller>
         [HttpGet]
@@ -43,6 +46,7 @@ namespace Oder.Api.Controllers
             }
             catch (OrderException ex)
             {
+                _orderLogger.LogInformation(ex.Message);
                 return BadRequest(ex.Message);
             }
         }

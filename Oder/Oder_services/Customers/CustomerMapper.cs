@@ -22,7 +22,8 @@ namespace Oder.Services.Customers
             return new CustomerDTO()
             {
                 Firstname = customer.Firstname,
-                Lastname = customer.Lastname
+                Lastname = customer.Lastname,
+                Id = customer.Id
             };
         }
     }

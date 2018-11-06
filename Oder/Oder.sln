@@ -13,6 +13,8 @@ Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "Oder.Domain.UnitTests", "Or
 EndProject
 Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "Oder.Services.UnitTests", "Order.Services.UnitTests\Oder.Services.UnitTests.csproj", "{0723F918-3863-41FB-8A19-3D3F7DA567F1}"
 EndProject
+Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "Oder.Api.UnitTests", "Oder.Api.UnitTests\Oder.Api.UnitTests.csproj", "{B530F60A-290E-4F73-A655-9B7D6B93A002}"
+EndProject
 Global
 	GlobalSection(SolutionConfigurationPlatforms) = preSolution
 		Debug|Any CPU = Debug|Any CPU
@@ -39,6 +41,10 @@ Global
 		{0723F918-3863-41FB-8A19-3D3F7DA567F1}.Debug|Any CPU.Build.0 = Debug|Any CPU
 		{0723F918-3863-41FB-8A19-3D3F7DA567F1}.Release|Any CPU.ActiveCfg = Release|Any CPU
 		{0723F918-3863-41FB-8A19-3D3F7DA567F1}.Release|Any CPU.Build.0 = Release|Any CPU
+		{B530F60A-290E-4F73-A655-9B7D6B93A002}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
+		{B530F60A-290E-4F73-A655-9B7D6B93A002}.Debug|Any CPU.Build.0 = Debug|Any CPU
+		{B530F60A-290E-4F73-A655-9B7D6B93A002}.Release|Any CPU.ActiveCfg = Release|Any CPU
+		{B530F60A-290E-4F73-A655-9B7D6B93A002}.Release|Any CPU.Build.0 = Release|Any CPU
 	EndGlobalSection
 	GlobalSection(SolutionProperties) = preSolution
 		HideSolutionNode = FALSE

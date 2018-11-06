@@ -20,9 +20,19 @@ namespace Oder.Services.Items
         {
             foreach (var item in itemDTO.GetType().GetProperties())
             {
-                if ((item.GetValue(itemDTO) == null))
+                if (item.Name != "Id")
                 {
-                    throw new ItemInputException();
+                    if ((item.GetValue(itemDTO) == null))
+                    {
+                        throw new ItemInputException();
+                    }
+                }
+                else
+                {
+                    if ((item.GetValue(itemDTO).ToString() != "-1"))
+                    {
+                        throw new ItemInputException();
+                    }
                 }
             }
             Item newItem = _itemMapper.FromItemDTOToItem(itemDTO);

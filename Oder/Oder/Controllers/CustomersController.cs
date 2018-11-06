@@ -30,7 +30,7 @@ namespace Oder.Api.Controllers
             _customerLogger.LogInformation("hoi");
             try
             {
-                return Ok(_customerService.CreateNewCustomer(customerDTO));
+                return Created("api/customers", _customerService.CreateNewCustomer(customerDTO));
             }
             catch (CustomerInputException ex)
             {

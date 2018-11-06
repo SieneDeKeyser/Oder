@@ -65,5 +65,24 @@ namespace Oder.Services.Customers
             //Then
             Assert.Throws<CustomerInputException>(act);
         }
+
+        [Fact]
+        public void GivenNewCustomerDTOWithAllNeededPropertiesAndId_WhenCreatingCustomer_ThenThrowCustomerException()
+        {
+            //Given
+            CustomerDTO customerDTO = new CustomerDTO();
+            customerDTO.Firstname = "test";
+            customerDTO.Id = 0;
+            customerDTO.Lastname = "test";
+            customerDTO.AdressOfCustomer = new Adress(1820, "Perk", "kerkstraat", 5);
+            customerDTO.Email = "xxx@test.com";
+            customerDTO.PhoneNumber = "04/72123456";
+
+            //When
+            Action act = () => customerService.CreateNewCustomer(customerDTO);
+
+            //Then
+            Assert.Throws<CustomerInputException>(act);
+        }
     }
 }
