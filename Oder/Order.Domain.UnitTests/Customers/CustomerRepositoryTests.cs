@@ -35,5 +35,49 @@ namespace Oder.Domain.UnitTests.Customers
             //then
             Assert.Contains(customer, _customerRepository.CustomersInDataBase.CustomersDB);
         }
+
+        [Fact]
+        public void GivenListOfCustomersInDB_WhenGetAllCustomers_ThReturnList()
+        {
+            //Given
+            CustomerBuilder customerbuilder = new CustomerBuilder();
+            Customer customer =
+                customerbuilder.WithFirstName("Test")
+                               .WithLastname("Test")
+                               .WithAddress(
+                                    new Adress(1820, "Perk", "kerkstraat", 5))
+                               .WithPhoneNumber("04/721233456")
+                               .WithEmailAdress("test@test.com")
+                               .Build();
+            _customerRepository.AddNewCustomer(customer);
+
+            //When
+            List<Customer> actualListOfCustomers = _customerRepository.GetAllCustomers();
+
+            //then
+            Assert.Contains(customer, actualListOfCustomers);
+        }
+
+        [Fact]
+        public void GivenListOfCustomersInDB_WhenGetCustomerById_ThenReturnCustomerWithThisId()
+        {
+            //Given
+            CustomerBuilder customerbuilder = new CustomerBuilder();
+            Customer customer =
+                customerbuilder.WithFirstName("Test")
+                               .WithLastname("Test")
+                               .WithAddress(
+                                    new Adress(1820, "Perk", "kerkstraat", 5))
+                               .WithPhoneNumber("04/721233456")
+                               .WithEmailAdress("test@test.com")
+                               .Build();
+            _customerRepository.AddNewCustomer(customer);
+
+            //When
+            Customer actualCustomer = _customerRepository.GetCustomerById(customer.Id);
+
+            //then
+            Assert.Equal(customer, actualCustomer);
+        }
     }
 }

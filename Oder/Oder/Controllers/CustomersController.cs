@@ -6,6 +6,8 @@ using Microsoft.AspNetCore.Mvc;
 using Microsoft.Extensions.Logging;
 using Oder.Services.Customers;
 using Oder.Domain.Customers.Exceptions;
+using Microsoft.AspNetCore.Authorization;
+
 
 // For more information on enabling MVC for empty projects, visit https://go.microsoft.com/fwlink/?LinkID=397860
 
@@ -24,7 +26,6 @@ namespace Oder.Api.Controllers
         }
 
         [HttpPost]
-        //Make Created() 201
         public ActionResult<CustomerDTO> CreateNewCustomer([FromBody] CustomerDTO customerDTO)
         {
             _customerLogger.LogInformation("hoi");
@@ -34,11 +35,30 @@ namespace Oder.Api.Controllers
             }
             catch (CustomerInputException ex)
             {
-               return BadRequest(ex.Message);
+                return BadRequest(ex.Message);
             }
         }
 
+        [Authorize]
         [HttpGet]
-        public ActionResult Get() { return Ok(); }
+        public ActionResult<List<CustomerDTO>> GetAllCustomers()
+        {
+            return Ok(_customerService.GetAllCustomers());
+        }
+
+        [Authorize]
+        [HttpGet]
+        [Route("{id}")]
+        public ActionResult<CustomerDTO> GetCustomerBasedOnId(int id)
+        {
+            try
+            {
+               return Ok(_customerService.GetCustomerById(id));
+            }
+            catch (CustomerNotFoundException ex)
+            {
+               return BadRequest(ex.Message);
+            }
+        }
     }
 }

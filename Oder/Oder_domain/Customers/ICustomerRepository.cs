@@ -8,5 +8,6 @@ namespace Oder.Domain.Customers
     {
         void AddNewCustomer(Customer newCustomer);
         Customer GetCustomerById(int id);
+        List<Customer> GetAllCustomers();
     }
 }

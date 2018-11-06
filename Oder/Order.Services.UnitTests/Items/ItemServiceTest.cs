@@ -11,15 +11,15 @@ namespace Oder.Services.UnitTests.Items
 {
    public class ItemServiceTest
     {
-        private IItemMapper _itemMapper;
-        private IItemRepository _itemRepository;
+        private IItemMapper _itemMapperStub;
+        private IItemRepository _itemRepositoryStub;
         private IItemService _itemService;
 
         public ItemServiceTest()
         {
-            _itemMapper = Substitute.For<IItemMapper>();
-            _itemRepository = Substitute.For<IItemRepository>();
-            _itemService = new ItemService(_itemMapper, _itemRepository);
+            _itemMapperStub = Substitute.For<IItemMapper>();
+            _itemRepositoryStub = Substitute.For<IItemRepository>();
+            _itemService = new ItemService(_itemMapperStub, _itemRepositoryStub);
         }
 
         [Fact]
@@ -41,13 +41,13 @@ namespace Oder.Services.UnitTests.Items
                 Description = "Test description"
             };
 
-            _itemMapper.FromItemDTOToItemWhenCreatingNewItem(newItemDTO).Returns(newItem);
+            _itemMapperStub.FromItemDTOToItemWhenCreatingNewItem(newItemDTO).Returns(newItem);
 
             //When
             _itemService.CreateNewItem(newItemDTO);
 
             //then
-            _itemRepository.Received().SaveNewItemInDB(newItem);
+            _itemRepositoryStub.Received().SaveNewItemInDB(newItem);
         }
 
         [Fact]
@@ -109,14 +109,14 @@ namespace Oder.Services.UnitTests.Items
                 Description = "Test description",
             };
 
-            _itemMapper.FromItemDTOToItemWhenUpdating(newItemDTO).Returns(newItem);
-            _itemRepository.UpdateItem(0, newItem).Returns(newItem);
+            _itemMapperStub.FromItemDTOToItemWhenUpdating(newItemDTO).Returns(newItem);
+            _itemRepositoryStub.UpdateItem(0, newItem).Returns(newItem);
             
             //When
             _itemService.UpdateItem(0, newItemDTO);
 
             //then
-            _itemRepository.Received().UpdateItem(0, newItem);
+            _itemRepositoryStub.Received().UpdateItem(0, newItem);
         }
 
         [Fact]

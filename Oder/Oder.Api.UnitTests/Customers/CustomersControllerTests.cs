@@ -14,15 +14,15 @@ namespace Oder.Api.UnitTests.Customers
 {
    public class CustomersControllerTests
     {
-        private readonly ICustomerService _customerService;
-        private readonly ILogger<CustomersController> _customerLogger;
+        private readonly ICustomerService _customerServiceStub;
+        private readonly ILogger<CustomersController> _customerLoggerStub;
         private CustomersController _customerController;
 
         public CustomersControllerTests()
         {
-            _customerService = Substitute.For<ICustomerService>();
-            _customerLogger = Substitute.For<ILogger<CustomersController>>();
-            _customerController = new CustomersController(_customerService, _customerLogger);
+            _customerServiceStub = Substitute.For<ICustomerService>();
+            _customerLoggerStub = Substitute.For<ILogger<CustomersController>>();
+            _customerController = new CustomersController(_customerServiceStub, _customerLoggerStub);
         }
 
         [Fact]
@@ -35,7 +35,7 @@ namespace Oder.Api.UnitTests.Customers
             customerDTO.AdressOfCustomer = new Adress(1820, "Perk", "kerkstraat", 5);
             customerDTO.Email = "xxx@test.com";
             customerDTO.PhoneNumber = "04/72123456";
-            _customerService.CreateNewCustomer(customerDTO).Returns(customerDTO);
+            _customerServiceStub.CreateNewCustomer(customerDTO).Returns(customerDTO);
 
             //When
             CreatedResult result = (CreatedResult) _customerController.CreateNewCustomer(customerDTO).Result;
@@ -55,7 +55,7 @@ namespace Oder.Api.UnitTests.Customers
             customerDTO.AdressOfCustomer = new Adress(1820, "Perk", "kerkstraat", 5);
             customerDTO.Email = "xxx@test.com";
             customerDTO.PhoneNumber = "04/72123456";
-            _customerService.CreateNewCustomer(customerDTO).Returns(ex => { throw new CustomerInputException(); });
+            _customerServiceStub.CreateNewCustomer(customerDTO).Returns(ex => { throw new CustomerInputException(); });
 
             //When
             BadRequestObjectResult result = (BadRequestObjectResult) _customerController.CreateNewCustomer(customerDTO).Result;
@@ -75,13 +75,26 @@ namespace Oder.Api.UnitTests.Customers
             customerDTO.AdressOfCustomer = new Adress(1820, "Perk", "kerkstraat", 5);
             customerDTO.Email = "xxx@test.com";
             customerDTO.PhoneNumber = "04/72123456";
-            _customerService.CreateNewCustomer(customerDTO).Returns(ex => { throw new CustomerInputException(); });
+            _customerServiceStub.CreateNewCustomer(customerDTO).Returns(ex => { throw new CustomerInputException(); });
 
             //When
             BadRequestObjectResult result = (BadRequestObjectResult)_customerController.CreateNewCustomer(customerDTO).Result;
 
             //Then
             Assert.Equal("Please provide all fields required for this creating new customer", result.Value);
+        }
+
+        [Fact]
+        public void GivenCustomerNonExistingId_WhenCustomerById_ThenReturnBadRequestWithCustomerNotFoundExceptionMessage()
+        {
+            //Given
+            _customerServiceStub.GetCustomerById(-1).Returns(ex => { throw new CustomerNotFoundException(); });
+
+            //When
+            BadRequestObjectResult result = (BadRequestObjectResult)_customerController.GetCustomerBasedOnId(-1).Result;
+
+            //Then
+            Assert.Equal("Customer with this id does not exist", result.Value);
         }
     }
 }

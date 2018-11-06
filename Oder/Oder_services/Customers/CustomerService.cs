@@ -2,6 +2,7 @@
 using Oder.Domain.Customers.Exceptions;
 using System;
 using System.Collections.Generic;
+using System.Linq;
 using System.Text;
 
 namespace Oder.Services.Customers
@@ -40,5 +41,19 @@ namespace Oder.Services.Customers
             return _customerMapper.FromCustomerToCustomerDTO(newCustomer);
         }
 
+        public List<CustomerDTO> GetAllCustomers()
+        {
+            return _customerRepository.GetAllCustomers().Select(customer => { return _customerMapper.FromCustomerToCustomerDTO(customer); }).ToList();
+        }
+
+        public CustomerDTO GetCustomerById(int id)
+        {
+            var customerToReturn = _customerRepository.GetCustomerById(id);
+            if (customerToReturn == null)
+            {
+                throw new CustomerNotFoundException();
+            }
+            return _customerMapper.FromCustomerToCustomerDTO(customerToReturn);
+        }
     }
 }

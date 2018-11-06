@@ -15,15 +15,15 @@ namespace Oder.Api.UnitTests.Orders
 {
    public class OrderControllerTests
     {
-        private readonly IOrderService _orderService;
-        private readonly ILogger<OrdersController> _orderLogger;
+        private readonly IOrderService _orderServiceStub;
+        private readonly ILogger<OrdersController> _orderLoggerStub;
         private readonly OrdersController _ordersController;
 
         public OrderControllerTests()
         {
-            _orderService = Substitute.For<IOrderService>();
-            _orderLogger = Substitute.For<ILogger<OrdersController>>();
-            _ordersController = new OrdersController(_orderService, _orderLogger);
+            _orderServiceStub = Substitute.For<IOrderService>();
+            _orderLoggerStub = Substitute.For<ILogger<OrdersController>>();
+            _ordersController = new OrdersController(_orderServiceStub, _orderLoggerStub);
         }
 
         [Fact]
@@ -33,13 +33,13 @@ namespace Oder.Api.UnitTests.Orders
             ItemGroupDTO itemgroupDTO1 = new ItemGroupDTO() { ItemId = 0, AmountOfThisItem = 2 };
             OrderDTO orderDTO1 = new OrderDTO() { IdOfCustomer = 0 };
             orderDTO1.ItemGroupsDTO.Add(itemgroupDTO1);
-            _orderService.CreateNewOrder(orderDTO1).Returns(orderDTO1);
+            _orderServiceStub.CreateNewOrder(orderDTO1).Returns(orderDTO1);
 
             //When
             _ordersController.MakeNewOrder(orderDTO1);
 
             //Then
-            _orderService.Received().CreateNewOrder(orderDTO1);
+            _orderServiceStub.Received().CreateNewOrder(orderDTO1);
         }
 
         [Fact]
@@ -49,7 +49,7 @@ namespace Oder.Api.UnitTests.Orders
             ItemGroupDTO itemgroupDTO1 = new ItemGroupDTO() { ItemId = 0, AmountOfThisItem = 2 };
             OrderDTO orderDTO1 = new OrderDTO() { IdOfCustomer = 0 };
             orderDTO1.ItemGroupsDTO.Add(itemgroupDTO1);
-            _orderService.CreateNewOrder(orderDTO1).Returns(orderDTO1);
+            _orderServiceStub.CreateNewOrder(orderDTO1).Returns(orderDTO1);
 
             //When
             CreatedResult result =  (CreatedResult) _ordersController.MakeNewOrder(orderDTO1).Result;
@@ -66,7 +66,7 @@ namespace Oder.Api.UnitTests.Orders
             ItemGroupDTO itemgroupDTO1 = new ItemGroupDTO() { ItemId = 0, AmountOfThisItem = 2, ShippingDate = new DateTime() };
             OrderDTO orderDTO1 = new OrderDTO() { IdOfCustomer = 0 };
             orderDTO1.ItemGroupsDTO.Add(itemgroupDTO1);
-            _orderService.CreateNewOrder(orderDTO1).Returns(ex => { throw new OrderException(); });
+            _orderServiceStub.CreateNewOrder(orderDTO1).Returns(ex => { throw new OrderException(); });
 
             //When
             BadRequestObjectResult result = (BadRequestObjectResult) _ordersController.MakeNewOrder(orderDTO1).Result;
@@ -82,7 +82,7 @@ namespace Oder.Api.UnitTests.Orders
             ItemGroupDTO itemgroupDTO1 = new ItemGroupDTO() { ItemId = 0, AmountOfThisItem = 2, TotalPriceItemGroup = 5};
             OrderDTO orderDTO1 = new OrderDTO() { IdOfCustomer = 0 };
             orderDTO1.ItemGroupsDTO.Add(itemgroupDTO1);
-            _orderService.CreateNewOrder(orderDTO1).Returns(ex => { throw new OrderException(); });
+            _orderServiceStub.CreateNewOrder(orderDTO1).Returns(ex => { throw new OrderException(); });
 
             //When
             BadRequestObjectResult result = (BadRequestObjectResult)_ordersController.MakeNewOrder(orderDTO1).Result;
@@ -98,7 +98,7 @@ namespace Oder.Api.UnitTests.Orders
             ItemGroupDTO itemgroupDTO1 = new ItemGroupDTO() { ItemId = 0, AmountOfThisItem = 2, TotalPriceItemGroup = 5, ShippingDate = new DateTime() };
             OrderDTO orderDTO1 = new OrderDTO() { IdOfCustomer = 0 };
             orderDTO1.ItemGroupsDTO.Add(itemgroupDTO1);
-            _orderService.CreateNewOrder(orderDTO1).Returns(ex => { throw new OrderException(); });
+            _orderServiceStub.CreateNewOrder(orderDTO1).Returns(ex => { throw new OrderException(); });
 
             //When
             BadRequestObjectResult result = (BadRequestObjectResult)_ordersController.MakeNewOrder(orderDTO1).Result;

@@ -8,6 +8,7 @@ using System.Threading.Tasks;
 using Oder.Services.Customers;
 using Oder.Domain.Adresses;
 using Newtonsoft.Json;
+using System;
 
 namespace Oder.IntegrationTests.Customers
 {
@@ -83,6 +84,46 @@ namespace Oder.IntegrationTests.Customers
 
             //then
             Assert.False(response.IsSuccessStatusCode);
+        }
+
+        [Fact]
+        public async Task GivenExistingCustomerID_WhenGetCustomerById_ThenReturnSuccessStatusCode()
+        {
+            //Given
+            CustomerDTO customerDTO = new CustomerDTO();
+            customerDTO.Lastname = "test";
+            customerDTO.Firstname = "test";
+            customerDTO.AdressOfCustomer = new Adress(1820, "Perk", "kerkstraat", 5);
+            customerDTO.Email = "xxx@test.com";
+            customerDTO.PhoneNumber = "04/72123456";
+            var customerJsonObject = JsonConvert.SerializeObject(customerDTO);
+            var stringContent = new StringContent(customerJsonObject, Encoding.UTF8, "application/json");
+            var response =  _client.PostAsync("api/customers", stringContent).Result;
+            CustomerDTO returnedCustomer = (CustomerDTO)response.Content.ReadAsAsync(typeof(CustomerDTO)).Result;
+
+            //When
+            _client.DefaultRequestHeaders.Authorization = CreateBasicHeader("Admin", "AdminPassword");
+            var responseGetById = await _client.GetAsync($"api/customers/{returnedCustomer.Id}");
+
+            //then
+            Assert.True(responseGetById.IsSuccessStatusCode);
+        }
+
+        [Fact]
+        public async Task GivenNonExistingCustomerID_WhenGetCustomerById_ThenReturnNotSuccessStatusCode()
+        {
+            //When
+            _client.DefaultRequestHeaders.Authorization = CreateBasicHeader("Admin", "AdminPassword");
+            var responseGetById = await _client.GetAsync($"api/customers/-1");
+
+            //then
+            Assert.False(responseGetById.IsSuccessStatusCode);
+        }
+
+        private AuthenticationHeaderValue CreateBasicHeader(string username, string password)
+        {
+            byte[] byteArray = Encoding.UTF8.GetBytes(username + ":" + password);
+            return new AuthenticationHeaderValue("Basic", Convert.ToBase64String(byteArray));
         }
     }
 }

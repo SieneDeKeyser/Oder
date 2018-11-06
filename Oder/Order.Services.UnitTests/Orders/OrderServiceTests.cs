@@ -14,20 +14,20 @@ namespace Oder.Services.UnitTests.Orders
 {
    public class OrderServiceTests
     {
-        private IItemRepository _itemRepository;
-        private IOrderRepository _orderRepository;
-        private ICustomerRepository _customerRepository;
-        private IOrderMapper _orderMapper;
+        private IItemRepository _itemRepositoryStub;
+        private IOrderRepository _orderRepositoryStub;
+        private ICustomerRepository _customerRepositoryStub;
+        private IOrderMapper _orderMapperStub;
         private OrderService _orderService;
 
         public OrderServiceTests()
         {
-            _orderRepository = Substitute.For<IOrderRepository>();
-            _itemRepository = Substitute.For<IItemRepository>();
-            _customerRepository = Substitute.For<ICustomerRepository>();
-            _orderMapper = Substitute.For<IOrderMapper>();
+            _orderRepositoryStub = Substitute.For<IOrderRepository>();
+            _itemRepositoryStub = Substitute.For<IItemRepository>();
+            _customerRepositoryStub = Substitute.For<ICustomerRepository>();
+            _orderMapperStub = Substitute.For<IOrderMapper>();
 
-            _itemRepository.GetItemBasedOnId(0)
+            _itemRepositoryStub.GetItemBasedOnId(0)
                .Returns(new Item()
                {
                    Price = 8,
@@ -36,7 +36,7 @@ namespace Oder.Services.UnitTests.Orders
                    Name = "TEST1"
                });
 
-            _itemRepository.GetItemBasedOnId(1)
+            _itemRepositoryStub.GetItemBasedOnId(1)
                .Returns(new Item()
                {
                    Price = 2,
@@ -45,9 +45,9 @@ namespace Oder.Services.UnitTests.Orders
                    Name = "TEST2"
                });
 
-            _customerRepository.GetCustomerById(0).Returns(new Customer(new CustomerBuilder()));
+            _customerRepositoryStub.GetCustomerById(0).Returns(new Customer(new CustomerBuilder()));
 
-            _orderService = new OrderService(_orderRepository, _itemRepository, _customerRepository, _orderMapper);
+            _orderService = new OrderService(_orderRepositoryStub, _itemRepositoryStub, _customerRepositoryStub, _orderMapperStub);
         }
 
         [Fact]
@@ -66,13 +66,13 @@ namespace Oder.Services.UnitTests.Orders
             newOrder.ItemGroups.Add(itemgroup1);
             newOrder.ItemGroups.Add(itemGroup2);
 
-            _orderMapper.FromOrderDTOToOrder(newOrderDTO).Returns(newOrder);
+            _orderMapperStub.FromOrderDTOToOrder(newOrderDTO).Returns(newOrder);
 
             //When
             _orderService.CreateNewOrder(newOrderDTO);
 
             //then
-            _orderRepository.Received().AddNewOrder(newOrder);
+            _orderRepositoryStub.Received().AddNewOrder(newOrder);
         }
 
         [Fact]
@@ -91,8 +91,8 @@ namespace Oder.Services.UnitTests.Orders
             newOrder.ItemGroups.Add(itemgroup1);
             newOrder.ItemGroups.Add(itemGroup2);
 
-            _orderMapper.FromOrderDTOToOrder(newOrderDTO).Returns(newOrder);
-            _orderMapper.FromOrderToOrderDTO(newOrder).Returns(newOrderDTO);
+            _orderMapperStub.FromOrderDTOToOrder(newOrderDTO).Returns(newOrder);
+            _orderMapperStub.FromOrderToOrderDTO(newOrder).Returns(newOrderDTO);
 
             //When
             _orderService.CreateNewOrder(newOrderDTO);

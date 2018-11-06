@@ -21,5 +21,10 @@ namespace Oder.Domain.Customers
         {
             return CustomersInDataBase.CustomersDB.SingleOrDefault(customer => customer.Id == id);
         }
+
+        public List<Customer> GetAllCustomers()
+        {
+            return CustomersInDataBase.CustomersDB;
+        }
     }
 }
