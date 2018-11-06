@@ -11,7 +11,7 @@ namespace Oder.Domain.Items
         public double Price { get; set; }
         public int AmountInStock { get; set; }
         public static int ItemCounter { get; set; }
-        public int Id { get;}
+        public int Id { get; set; }
         public Item()
         {
             Id = ItemCounter;

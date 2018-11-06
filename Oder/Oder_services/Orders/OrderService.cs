@@ -31,8 +31,7 @@ namespace Oder.Services.Orders
 
         public OrderDTO CreateNewOrder(OrderDTO newOrderDTO)
         {
-            Order newOrder = new Order();
-            newOrder = _orderMapper.FromOrderDTOToOrder(newOrderDTO);
+            Order newOrder = _orderMapper.FromOrderDTOToOrder(newOrderDTO);
             
             newOrder.CustomerOfThisOrder = SearchCustomer(newOrderDTO.IdOfCustomer);
             if (newOrder.CustomerOfThisOrder == null)
@@ -44,6 +43,7 @@ namespace Oder.Services.Orders
                 Item itemOfThisGroup = _itemRepository.GetItemBasedOnId(itemGroup.ItemId);
                 itemGroup.PriceOfItem = itemOfThisGroup.Price;
                 itemGroup.ShippingDate = itemGroup.CalculateShippingDate(itemOfThisGroup);
+                itemOfThisGroup.AmountInStock -= itemGroup.AmountOfThisItem;
             }
             _orderRepository.AddNewOrder(newOrder);
             return _orderMapper.FromOrderToOrderDTO(newOrder);

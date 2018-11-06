@@ -212,48 +212,5 @@ namespace Oder.IntegrationTests.Orders
             byte[] byteArray = Encoding.UTF8.GetBytes(username + ":" + password);
             return new AuthenticationHeaderValue("Basic", Convert.ToBase64String(byteArray));
         }
-
-        private async void PrepareItemsAndCustomers()
-        {
-            Customer.CustomerIdCounter = 0;
-            Order.OrderCounter = 0;
-            Item.ItemCounter = 0;
-
-            ItemDTO newItemDTO1 = new ItemDTO()
-            {
-                AmountInStock = 5,
-                Price = 10.0,
-                Name = "Test1",
-                Description = "Test description1"
-            };
-
-            ItemDTO newItemDTO2 = new ItemDTO()
-            {
-                AmountInStock = 5,
-                Price = 10.0,
-                Name = "Test2",
-                Description = "Test description2"
-            };
-
-            var ItemJsonObject1 = JsonConvert.SerializeObject(newItemDTO1);
-            var stringContent1 = new StringContent(ItemJsonObject1, Encoding.UTF8, "application/json");
-            _client.DefaultRequestHeaders.Authorization = CreateBasicHeader("Admin", "AdminPassword");
-            var response1 = await _client.PostAsync("api/items", stringContent1);
-
-            var ItemJsonObject2 = JsonConvert.SerializeObject(newItemDTO2);
-            var stringContent2 = new StringContent(ItemJsonObject2, Encoding.UTF8, "application/json");
-            _client.DefaultRequestHeaders.Authorization = CreateBasicHeader("Admin", "AdminPassword");
-            var response2 = await _client.PostAsync("api/items", stringContent1);
-
-            CustomerDTO customerDTO = new CustomerDTO();
-            customerDTO.Firstname = "test";
-            customerDTO.Lastname = "test";
-            customerDTO.AdressOfCustomer = new Adress(1820, "Perk", "kerkstraat", 5);
-            customerDTO.Email = "xxx@test.com";
-            customerDTO.PhoneNumber = "04/72123456";
-            var customerJsonObject = JsonConvert.SerializeObject(customerDTO);
-            var stringContentCustomer = new StringContent(customerJsonObject, Encoding.UTF8, "application/json");
-            var responseCustomer = await _client.PostAsync("api/customers", stringContentCustomer);
-        }
     }
 }

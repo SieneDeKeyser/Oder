@@ -32,11 +32,44 @@ namespace Oder.Api.Controllers
             try
             {
                 var newItem = _itemService.CreateNewItem(itemDTO);
-                return Created("api/items/" + newItem.Id, newItem );
+                return Created("api/items/" + newItem.Id, newItem);
             }
             catch (ItemInputException ex)
             {
                 _itemLogger.LogInformation(ex.Message);
+                return BadRequest(ex.Message);
+            }
+        }
+
+        [HttpGet]
+        [Route("{id}")]
+        public ActionResult<ItemDTO> GetOneItemById(int id)
+        {
+            try
+            {
+                return Ok(_itemService.GetItemById(id));
+            }
+            catch (ItemNotFoundException ex)
+            {
+                return BadRequest(ex.Message);
+            }
+        }
+
+        [Authorize]
+        [HttpPut]
+        [Route("{id}")]
+        public ActionResult<ItemDTO> UpdateItem([FromBody] ItemDTO itemToUpdate, int id)
+        {
+            try
+            {
+                return Ok(_itemService.UpdateItem(id, itemToUpdate));
+            }
+            catch (ItemNotFoundException ex)
+            {
+                return BadRequest(ex.Message);
+            }
+            catch (ItemInputException ex)
+            {
                 return BadRequest(ex.Message);
             }
         }

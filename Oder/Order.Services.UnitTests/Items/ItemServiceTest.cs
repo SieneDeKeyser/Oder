@@ -41,7 +41,7 @@ namespace Oder.Services.UnitTests.Items
                 Description = "Test description"
             };
 
-            _itemMapper.FromItemDTOToItem(newItemDTO).Returns(newItem);
+            _itemMapper.FromItemDTOToItemWhenCreatingNewItem(newItemDTO).Returns(newItem);
 
             //When
             _itemService.CreateNewItem(newItemDTO);
@@ -83,6 +83,66 @@ namespace Oder.Services.UnitTests.Items
 
             //When
             Action act = () => _itemService.CreateNewItem(newItemDTO);
+
+            //then
+            Assert.Throws<ItemInputException>(act);
+        }
+
+        [Fact]
+        public void GivenNewItemDTOAndExistingID_WhenUpdatingThatItem_ThenCallToItemRepositoryToUpdate()
+        {
+            //Given
+            Item newItem = new Item()
+            {
+                AmountInStock = 5,
+                Price = 10.0,
+                Name = "Test",
+                Description = "Test description",
+                Id = 0
+            };
+
+            ItemDTO newItemDTO = new ItemDTO()
+            {
+                AmountInStock = 5,
+                Price = 10.0,
+                Name = "Test",
+                Description = "Test description",
+            };
+
+            _itemMapper.FromItemDTOToItemWhenUpdating(newItemDTO).Returns(newItem);
+            _itemRepository.UpdateItem(0, newItem).Returns(newItem);
+            
+            //When
+            _itemService.UpdateItem(0, newItemDTO);
+
+            //then
+            _itemRepository.Received().UpdateItem(0, newItem);
+        }
+
+        [Fact]
+        public void GivenNewItemDTOWithIdAndExistingID_WhenUpdatingThatItem_ThenThrowInputItemException()
+        {
+            //Given
+            Item newItem = new Item()
+            {
+                AmountInStock = 5,
+                Price = 10.0,
+                Name = "Test",
+                Description = "Test description",
+                Id = 0
+            };
+
+            ItemDTO newItemDTO = new ItemDTO()
+            {
+                AmountInStock = 5,
+                Price = 10.0,
+                Name = "Test",
+                Description = "Test description",
+                Id = 0
+            };
+
+            //When
+            Action act = () => _itemService.UpdateItem(0, newItemDTO);
 
             //then
             Assert.Throws<ItemInputException>(act);

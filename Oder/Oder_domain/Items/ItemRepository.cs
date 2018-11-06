@@ -3,6 +3,7 @@ using System.Collections.Generic;
 using System.Linq;
 using System.Text;
 using Oder.Domain.Items;
+using Oder.Domain.Items.Exceptions;
 
 namespace Oder.Domain.Items
 {
@@ -28,6 +29,19 @@ namespace Oder.Domain.Items
         public void SaveNewItemInDB(Item item)
         {
             itemsInDB.Items.Add(item);
+        }
+
+        public Item UpdateItem(int id, Item itemToUpdate)
+        {
+            Item item = GetItemBasedOnId(id);
+            if (item == null)
+            {
+                throw new ItemNotFoundException();
+            }
+            var index = itemsInDB.Items.FindIndex(itemsearch => itemsearch.Id == id);
+            itemsInDB.Items[index] = itemToUpdate;
+            itemsInDB.Items[index].Id = id;
+            return itemsInDB.Items[index];
         }
     }
 }

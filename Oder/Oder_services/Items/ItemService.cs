@@ -35,7 +35,7 @@ namespace Oder.Services.Items
                     }
                 }
             }
-            Item newItem = _itemMapper.FromItemDTOToItem(itemDTO);
+            Item newItem = _itemMapper.FromItemDTOToItemWhenCreatingNewItem(itemDTO);
             _itemRepository.SaveNewItemInDB(newItem);
             return _itemMapper.FromItemToItemDTO(newItem);
         }
@@ -43,6 +43,40 @@ namespace Oder.Services.Items
         public List<ItemDTO> GetAllItems()
         {
             return _itemRepository.GetItems().Select(item => { return _itemMapper.FromItemToItemDTO(item); }).ToList();
+        }
+
+        public ItemDTO GetItemById(int id)
+        {
+            var itemToSearch = _itemRepository.GetItemBasedOnId(id);
+            if (itemToSearch == null)
+            {
+                throw new ItemNotFoundException();
+            }
+            var itemToReturn = _itemMapper.FromItemToItemDTO(itemToSearch);
+            return itemToReturn;
+        }
+
+        public ItemDTO UpdateItem(int id, ItemDTO itemToUpdateDTO)
+        {
+            foreach (var item in itemToUpdateDTO.GetType().GetProperties())
+            {
+                if (item.Name != "Id")
+                {
+                    if ((item.GetValue(itemToUpdateDTO) == null))
+                    {
+                        throw new ItemInputException();
+                    }
+                }
+                else
+                {
+                    if ((item.GetValue(itemToUpdateDTO).ToString() != "-1"))
+                    {
+                        throw new ItemInputException();
+                    }
+                }
+            }
+            Item ItemToUpdate = _itemMapper.FromItemDTOToItemWhenUpdating(itemToUpdateDTO);
+            return _itemMapper.FromItemToItemDTO(_itemRepository.UpdateItem(id, ItemToUpdate));
         }
     }
 }

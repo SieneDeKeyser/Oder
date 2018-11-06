@@ -52,5 +52,19 @@ namespace Oder.Api.UnitTests.Items
             //Then
             Assert.Equal("Please provide all fields required for this Item", result.Value);
         }
+
+        [Fact]
+        public void GivenNewItemWithAllPropertiesAsAdministratorAndExistingItemId_WhenUpdatingItem_ThenReturnOK()
+        {
+            //Given
+            ItemDTO itemDto1 = new ItemDTO() { Name = "testItem", Description = "test description", AmountInStock = 5, Price = 10 };
+            _itemService.UpdateItem(0, itemDto1).Returns(itemDto1);
+
+            //When
+            OkObjectResult result = (OkObjectResult)_itemsController.UpdateItem(itemDto1, 0).Result;
+
+            //Then
+            Assert.Equal(itemDto1, result.Value);
+        }
     }
 }

@@ -9,5 +9,7 @@ namespace Oder.Services.Items
     {
         ItemDTO CreateNewItem(ItemDTO itemDTO);
         List<ItemDTO> GetAllItems();
+        ItemDTO GetItemById(int id);
+        ItemDTO UpdateItem(int id, ItemDTO itemToUpdateDTO);
     }
 }

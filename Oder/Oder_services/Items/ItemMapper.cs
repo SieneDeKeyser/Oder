@@ -7,7 +7,7 @@ namespace Oder.Services.Items
 {
     public class ItemMapper : IItemMapper
     {
-        public Item FromItemDTOToItem(ItemDTO itemDTO)
+        public Item FromItemDTOToItemWhenCreatingNewItem(ItemDTO itemDTO)
         {
             return new Item()
             {
@@ -16,6 +16,17 @@ namespace Oder.Services.Items
                 AmountInStock = itemDTO.AmountInStock,
                 Name = itemDTO.Name
             };
+        }
+
+        public Item FromItemDTOToItemWhenUpdating(ItemDTO itemToUpdateDTO)
+        {
+            Item item = new Item();
+            Item.ItemCounter -= 1;
+            item.Description = itemToUpdateDTO.Description;
+            item.Price = itemToUpdateDTO.Price;
+            item.AmountInStock = itemToUpdateDTO.AmountInStock;
+            item.Name = itemToUpdateDTO.Name;
+            return item;
         }
 
         public ItemDTO FromItemToItemDTO(Item item)

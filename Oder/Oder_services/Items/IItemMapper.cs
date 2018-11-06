@@ -7,7 +7,8 @@ namespace Oder.Services.Items
 {
    public interface IItemMapper
     {
-        Item FromItemDTOToItem(ItemDTO itemDTO);
+        Item FromItemDTOToItemWhenCreatingNewItem(ItemDTO itemDTO);
         ItemDTO FromItemToItemDTO(Item item);
+        Item FromItemDTOToItemWhenUpdating(ItemDTO itemToUpdateDTO);
     }
 }
