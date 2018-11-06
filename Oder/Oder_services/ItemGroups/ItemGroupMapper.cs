@@ -2,6 +2,7 @@
 using System.Collections.Generic;
 using System.Text;
 using Oder.Domain.Orders.ItemGroups;
+using Oder.Services.Orders.OrderExceptions;
 
 namespace Oder.Services.ItemGroups
 {
@@ -9,6 +10,10 @@ namespace Oder.Services.ItemGroups
     {
         public ItemGroup FromItemGroupDTOToItemGroup(ItemGroupDTO itemGroupDTO)
         {
+            if (itemGroupDTO.TotalPriceItemGroup != 0 || itemGroupDTO.ShippingDate != null)
+            {
+                throw new OrderException();
+            }
             return new ItemGroup()
             {
                 AmountOfThisItem = itemGroupDTO.AmountOfThisItem,

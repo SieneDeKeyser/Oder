@@ -25,7 +25,8 @@ namespace Oder.Services.Items
                 Description = item.Description,
                 Price = item.Price,
                 AmountInStock = item.AmountInStock,
-                Name = item.Name
+                Name = item.Name,
+                Id = item.Id
             };
         }
     }

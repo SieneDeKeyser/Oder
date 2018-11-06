@@ -14,14 +14,15 @@ namespace Oder.Api.Controllers
 {
     [Route("api/[controller]")]
     [ApiController]
-    public class ItemController : ControllerBase
+    public class ItemsController : ControllerBase
     {
         private readonly IItemService _itemService;
-        private readonly ILogger<ItemController> _itemLogger;
+        private readonly ILogger<ItemsController> _itemLogger;
 
-        public ItemController(IItemService itemService)
+        public ItemsController(IItemService itemService, ILogger<ItemsController> itemLogger)
         {
             _itemService = itemService;
+            _itemLogger = itemLogger;
         }
 
         [Authorize]
@@ -30,17 +31,20 @@ namespace Oder.Api.Controllers
         {
             try
             {
-                return Ok(_itemService.CreateNewItem(itemDTO));
+                var newItem = _itemService.CreateNewItem(itemDTO);
+                return Created("api/items/" + newItem.Id, newItem );
             }
             catch (ItemInputException ex)
             {
+                _itemLogger.LogInformation(ex.Message);
                 return BadRequest(ex.Message);
             }
         }
+
         [HttpGet]
-        public ActionResult Get()
+        public ActionResult<ItemDTO> GetAllItems()
         {
-            return Ok();
+            return Ok(_itemService.GetAllItems());
         }
     }
 }

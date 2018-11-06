@@ -4,17 +4,18 @@ using System.Linq;
 using System.Threading.Tasks;
 using Microsoft.AspNetCore.Mvc;
 using Oder.Services.Orders;
+using Oder.Services.Orders.OrderExceptions;
 
 // For more information on enabling Web API for empty projects, visit https://go.microsoft.com/fwlink/?LinkID=397860
 
 namespace Oder.Api.Controllers
 {
     [Route("api/[controller]")]
-    public class OrderController : Controller
+    public class OrdersController : Controller
     {
         private readonly IOrderService _orderService;
 
-        public OrderController(IOrderService orderService)
+        public OrdersController(IOrderService orderService)
         {
             _orderService = orderService;
         }
@@ -32,12 +33,18 @@ namespace Oder.Api.Controllers
             return "value";
         }
 
-        //TODO
-        //Exceptions!!!! checken
         [HttpPost]
         public ActionResult<OrderDTO> MakeNewOrder([FromBody] OrderDTO newOrderDTO)
         {
-           return Ok(_orderService.CreateNewOrder(newOrderDTO));   
+            try
+            {
+                var orderCreated = _orderService.CreateNewOrder(newOrderDTO);
+                return Created("api/orders/" + orderCreated.Id, orderCreated);
+            }
+            catch (OrderException ex)
+            {
+                return BadRequest(ex.Message);
+            }
         }
 
 

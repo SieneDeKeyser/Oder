@@ -13,7 +13,7 @@ namespace Oder.Domain.Orders
         }
         public void AddNewOrder(Order order)
         {
-            
+            OrdersInDB.Orders.Add(order);
         }
     }
 }

@@ -7,7 +7,7 @@ using Oder.Services.Items;
 using Oder.Domain.Items;
 using Oder.Domain.Items.Exceptions;
 
-namespace Order.Services.UnitTests.Items
+namespace Oder.Services.UnitTests.Items
 {
    public class ItemServiceTest
     {

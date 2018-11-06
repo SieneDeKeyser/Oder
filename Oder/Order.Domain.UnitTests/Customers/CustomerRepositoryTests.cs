@@ -5,7 +5,7 @@ using System.Collections.Generic;
 using System.Text;
 using Xunit;
 
-namespace Order.Domain.UnitTests.Customers
+namespace Oder.Domain.UnitTests.Customers
 {
    public class CustomerRepositoryTests
     {

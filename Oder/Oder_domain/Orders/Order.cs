@@ -11,21 +11,25 @@ namespace Oder.Domain.Orders
         
         public List<ItemGroup> ItemGroups { get; set; }
         public int IdOfCustomer { get; set; }
-        public double PriceOfThisOrder { get; private set; }
+        public double PriceOfThisOrder { get { return CalculatePriceOfOrder(); } }
         public Customer CustomerOfThisOrder { get; set; }
+        public int OrderId { get;}
+        public static int OrderCounter { get; set; }
         public Order()
         {
             ItemGroups = new List<ItemGroup>();
+            OrderId = OrderCounter;
+            OrderCounter++;
         }
 
-        public void CalculatePriceOfOrder()
+        public double CalculatePriceOfOrder()
         {
             double price = 0;
             foreach (var itemgroup in ItemGroups)
             {
-                price += itemgroup.TotalPriceItemGroup;
+                price += itemgroup.CalculateTotalPriceOfItemGroup();
             }
-            PriceOfThisOrder = price;
+            return price;
         }
     }
 }

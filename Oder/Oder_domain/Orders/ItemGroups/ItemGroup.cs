@@ -10,17 +10,17 @@ namespace Oder.Domain.Orders.ItemGroups
         public int ItemId { get; set; }
         public int AmountOfThisItem { get; set; }
         public DateTime ShippingDate { get; set; }
-        public double TotalPriceItemGroup { get; set; }
+        public double PriceOfItem { get; set; }
 
         public ItemGroup()
         {
 
         }
 
-        public double CalculateTotalPriceOfItemGroup(Item itemOfThisGroup)
+        public double CalculateTotalPriceOfItemGroup()
         {     
             double price = -1;
-            price = itemOfThisGroup.Price * AmountOfThisItem;
+            price = PriceOfItem * AmountOfThisItem;
             return price;
         }
 

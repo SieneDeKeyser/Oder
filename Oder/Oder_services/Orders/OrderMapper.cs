@@ -23,6 +23,7 @@ namespace Oder.Services.Orders
                 ItemGroupDTO itemGroupFromThisOrder = _itemGroupMapper.FromItemGroupToItemGroupDTO(itemGroup);
                 orderDTOToReturn.ItemGroupsDTO.Add(itemGroupFromThisOrder);
             }
+            orderDTOToReturn.Id = orderToMap.OrderId;
             return orderDTOToReturn;
         }
 
@@ -34,7 +35,7 @@ namespace Oder.Services.Orders
                 ItemGroup itemGroupFromThisOrder = _itemGroupMapper.FromItemGroupDTOToItemGroup(itemgroupDTO);
                 orderToReturn.ItemGroups.Add(itemGroupFromThisOrder);
             }
-            orderToReturn.
+            orderToReturn.CalculatePriceOfOrder();
             return orderToReturn;
         }
     }

@@ -11,8 +11,13 @@ namespace Oder.Services.ItemGroups
              */
         public int ItemId { get; set; }
         public int AmountOfThisItem { get; set; }
-        public DateTime ShippingDate { get; set; }
+        public DateTime? ShippingDate { get; set; }
         public double TotalPriceItemGroup { get; set; }
 
+        public ItemGroupDTO()
+        {
+            ShippingDate = null;
+            TotalPriceItemGroup = 0;
+        }
     }
 }

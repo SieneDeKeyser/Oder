@@ -1,5 +1,6 @@
 ﻿using System;
 using System.Collections.Generic;
+using System.Linq;
 using System.Text;
 using Oder.Domain.Items;
 using Oder.Domain.Items.Exceptions;
@@ -27,6 +28,11 @@ namespace Oder.Services.Items
             Item newItem = _itemMapper.FromItemDTOToItem(itemDTO);
             _itemRepository.SaveNewItemInDB(newItem);
             return _itemMapper.FromItemToItemDTO(newItem);
+        }
+
+        public List<ItemDTO> GetAllItems()
+        {
+            return _itemRepository.GetItems().Select(item => { return _itemMapper.FromItemToItemDTO(item); }).ToList();
         }
     }
 }

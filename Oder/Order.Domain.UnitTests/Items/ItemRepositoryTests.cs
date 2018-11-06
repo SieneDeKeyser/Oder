@@ -4,7 +4,7 @@ using System.Collections.Generic;
 using System.Text;
 using Xunit;
 
-namespace Order.Domain.UnitTests.Items
+namespace Oder.Domain.UnitTests.Items
 {
    public class ItemRepositoryTests
     {

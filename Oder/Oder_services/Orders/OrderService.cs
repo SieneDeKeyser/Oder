@@ -32,15 +32,14 @@ namespace Oder.Services.Orders
         {
             Order newOrder = new Order();
             newOrder = _orderMapper.FromOrderDTOToOrder(newOrderDTO);
-            newOrder.CustomerOfThisOrder = SearchCustomer(newOrderDTO.CustomerID);
+            newOrder.CustomerOfThisOrder = SearchCustomer(newOrderDTO.IdOfCustomer);
             foreach (var itemGroup in newOrder.ItemGroups)
             {
                 Item itemOfThisGroup = _itemRepository.GetItemBasedOnId(itemGroup.ItemId);
-                itemGroup.TotalPriceItemGroup = itemGroup.CalculateTotalPriceOfItemGroup(itemOfThisGroup);
+                itemGroup.PriceOfItem = itemOfThisGroup.Price;
                 itemGroup.ShippingDate = itemGroup.CalculateShippingDate(itemOfThisGroup);
             }
             _orderRepository.AddNewOrder(newOrder);
-            newOrder.CalculatePriceOfOrder();
             return _orderMapper.FromOrderToOrderDTO(newOrder);
         }
 

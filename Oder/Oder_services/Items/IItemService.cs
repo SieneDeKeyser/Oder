@@ -8,5 +8,6 @@ namespace Oder.Services.Items
    public interface IItemService
     {
         ItemDTO CreateNewItem(ItemDTO itemDTO);
+        List<ItemDTO> GetAllItems();
     }
 }

@@ -6,7 +6,7 @@ using Oder.Services.Customers;
 using System;
 using Xunit;
 
-namespace Order.Services.Customers
+namespace Oder.Services.Customers
 {
     public class CustomerServiceUnitTests
     {

@@ -9,9 +9,9 @@ Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "Oder.Domain", "Oder_domain\
 EndProject
 Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "Oder.Services", "Oder_services\Oder.Services.csproj", "{24645B9F-67C6-4C21-8884-D3A1C4C40EF8}"
 EndProject
-Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "Order.Domain.UnitTests", "Order.Domain.UnitTests\Order.Domain.UnitTests.csproj", "{F3908356-F426-4014-B730-53BFE7D9CD02}"
+Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "Oder.Domain.UnitTests", "Order.Domain.UnitTests\Oder.Domain.UnitTests.csproj", "{F3908356-F426-4014-B730-53BFE7D9CD02}"
 EndProject
-Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "Order.Services.UnitTests", "Order.Services.UnitTests\Order.Services.UnitTests.csproj", "{0723F918-3863-41FB-8A19-3D3F7DA567F1}"
+Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "Oder.Services.UnitTests", "Order.Services.UnitTests\Oder.Services.UnitTests.csproj", "{0723F918-3863-41FB-8A19-3D3F7DA567F1}"
 EndProject
 Global
 	GlobalSection(SolutionConfigurationPlatforms) = preSolution

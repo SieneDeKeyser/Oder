@@ -9,5 +9,6 @@ namespace Oder.Domain.Items
     {
         void SaveNewItemInDB(Item item);
         Item GetItemBasedOnId(int id);
+        List<Item> GetItems();
     }
 }

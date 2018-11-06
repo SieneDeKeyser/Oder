@@ -10,5 +10,6 @@ namespace Oder.Services.Items
         public string Description { get; set; }
         public double Price { get; set; }
         public int AmountInStock { get; set; }
+        public int Id { get; set; }
     }
 }

@@ -4,7 +4,7 @@ using Oder.Domain.Customers.Exceptions;
 using System;
 using Xunit;
 
-namespace Order.Domain.UnitTests.Customers
+namespace Oder.Domain.UnitTests.Customers
 {
     public class CustomerTests
     {

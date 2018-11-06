@@ -13,17 +13,18 @@ namespace Oder.Api.Controllers
 {
     [Route("api/[controller]")]
     [ApiController]
-    public class CustomerController : ControllerBase
+    public class CustomersController : ControllerBase
     {
         private readonly ICustomerService _customerService;
-        private readonly ILogger<CustomerController> _customerLogger;
-        public CustomerController(ICustomerService customerService, ILogger<CustomerController> customerLogger)
+        private readonly ILogger<CustomersController> _customerLogger;
+        public CustomersController(ICustomerService customerService, ILogger<CustomersController> customerLogger)
         {
             _customerService = customerService;
             _customerLogger = customerLogger;
         }
 
         [HttpPost]
+        //Make Created() 201
         public ActionResult<CustomerDTO> CreateNewCustomer([FromBody] CustomerDTO customerDTO)
         {
             _customerLogger.LogInformation("hoi");

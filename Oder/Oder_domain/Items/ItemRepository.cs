@@ -20,6 +20,11 @@ namespace Oder.Domain.Items
             return itemsInDB.Items.SingleOrDefault(item => item.Id == id);
         }
 
+        public List<Item> GetItems()
+        {
+            return itemsInDB.Items;
+        }
+
         public void SaveNewItemInDB(Item item)
         {
             itemsInDB.Items.Add(item);
