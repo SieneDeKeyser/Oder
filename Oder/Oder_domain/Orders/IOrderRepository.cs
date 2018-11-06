@@ -7,5 +7,6 @@ namespace Oder.Domain.Orders
    public interface IOrderRepository
     {
         void AddNewOrder(Order order);
+        List<Order> GetAllOrders();
     }
 }

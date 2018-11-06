@@ -12,7 +12,9 @@ using Oder.Services.Orders;
 namespace Oder.Api.Controllers
 {
     [Route("api/[controller]")]
-    public class OrdersController : Controller
+    [ApiController]
+
+    public class OrdersController : ControllerBase
     {
         private readonly IOrderService _orderService;
         private readonly ILogger<OrdersController> _orderLogger;
@@ -22,18 +24,12 @@ namespace Oder.Api.Controllers
             _orderService = orderService;
             _orderLogger = orderLogger;
         }
+
         // GET: api/<controller>
         [HttpGet]
-        public IEnumerable<string> Get()
+        public ActionResult<List<OrderDTO>> GetAllOrders()
         {
-            return new string[] { "value1", "value2" };
-        }
-
-        // GET api/<controller>/5
-        [HttpGet("{id}")]
-        public string Get(int id)
-        {
-            return "value";
+           return Ok(_orderService.GetAllOrders());
         }
 
         [HttpPost]
@@ -52,16 +48,5 @@ namespace Oder.Api.Controllers
         }
 
 
-        // PUT api/<controller>/5
-        [HttpPut("{id}")]
-        public void Put(int id, [FromBody]string value)
-        {
-        }
-
-        // DELETE api/<controller>/5
-        [HttpDelete("{id}")]
-        public void Delete(int id)
-        {
-        }
     }
 }

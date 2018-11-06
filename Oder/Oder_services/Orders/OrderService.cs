@@ -7,6 +7,7 @@ using System;
 using System.Collections.Generic;
 using System.Text;
 using Oder.Domain.Orders.OrderExceptions;
+using System.Linq;
 
 namespace Oder.Services.Orders
 {
@@ -47,6 +48,11 @@ namespace Oder.Services.Orders
             }
             _orderRepository.AddNewOrder(newOrder);
             return _orderMapper.FromOrderToOrderDTO(newOrder);
+        }
+
+        public List<OrderDTO> GetAllOrders()
+        {
+            return _orderRepository.GetAllOrders().Select(order => { return _orderMapper.FromOrderToOrderDTO(order); }).ToList();
         }
 
         private Customer SearchCustomer(int idCustomer)

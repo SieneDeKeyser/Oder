@@ -1,16 +1,14 @@
-﻿using System;
-using System.Collections.Generic;
-using System.Linq;
-using System.Threading.Tasks;
+﻿
 using Microsoft.AspNetCore.Authentication;
 using Microsoft.AspNetCore.Builder;
 using Microsoft.AspNetCore.Hosting;
-using Microsoft.AspNetCore.HttpsPolicy;
+
 using Microsoft.AspNetCore.Mvc;
 using Microsoft.Extensions.Configuration;
 using Microsoft.Extensions.DependencyInjection;
-using Microsoft.Extensions.Logging;
-using Microsoft.Extensions.Options;
+
+using NJsonSchema;
+using NSwag.AspNetCore;
 using Oder.Domain.Customers;
 using Oder.Domain.Items;
 using Oder.Domain.Orders;
@@ -67,9 +65,20 @@ namespace Oder
                 app.UseHsts();
             }
 
-            //app.UseHttpsRedirection();
             app.UseAuthentication();
+
+            app.UseSwaggerUi3WithApiExplorer(settings =>
+            {
+                settings.GeneratorSettings.DefaultPropertyNameHandling =
+                    PropertyNameHandling.CamelCase;
+            });
+
             app.UseMvc();
+
+            app.Run(async context =>
+            {
+                context.Response.Redirect("/swagger");
+            });
         }
     }
 }

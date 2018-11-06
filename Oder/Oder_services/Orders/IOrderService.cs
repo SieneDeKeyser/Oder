@@ -7,5 +7,6 @@ namespace Oder.Services.Orders
    public interface IOrderService
     {
         OrderDTO CreateNewOrder(OrderDTO newOrderDTO);
+        List<OrderDTO> GetAllOrders();
     }
 }

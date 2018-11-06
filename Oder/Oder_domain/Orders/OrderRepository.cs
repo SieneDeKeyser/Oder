@@ -15,5 +15,10 @@ namespace Oder.Domain.Orders
         {
             OrdersInDB.Orders.Add(order);
         }
+
+        public List<Order> GetAllOrders()
+        {
+            return OrdersInDB.Orders;
+        }
     }
 }
