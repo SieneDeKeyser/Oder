@@ -24,7 +24,7 @@ namespace Oder.Services.Orders
                 ItemGroupDTO itemGroupFromThisOrder = _itemGroupMapper.FromItemGroupToItemGroupDTO(itemGroup);
                 orderDTOToReturn.ItemGroupsDTO.Add(itemGroupFromThisOrder);
             }
-            orderDTOToReturn.Id = orderToMap.OrderId;
+            orderDTOToReturn.Id = orderToMap.OrderId;           
             return orderDTOToReturn;
         }
 

@@ -6,6 +6,7 @@ using Oder.Services.ItemGroups;
 using System;
 using System.Collections.Generic;
 using System.Text;
+using Oder.Domain.Orders.OrderExceptions;
 
 namespace Oder.Services.Orders
 {
@@ -34,6 +35,10 @@ namespace Oder.Services.Orders
             newOrder = _orderMapper.FromOrderDTOToOrder(newOrderDTO);
             
             newOrder.CustomerOfThisOrder = SearchCustomer(newOrderDTO.IdOfCustomer);
+            if (newOrder.CustomerOfThisOrder == null)
+            {
+                throw new OrderException();
+            }
             foreach (var itemGroup in newOrder.ItemGroups)
             {
                 Item itemOfThisGroup = _itemRepository.GetItemBasedOnId(itemGroup.ItemId);

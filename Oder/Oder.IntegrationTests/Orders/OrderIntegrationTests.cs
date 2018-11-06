@@ -30,16 +30,51 @@ namespace Oder.IntegrationTests.Orders
             _client.DefaultRequestHeaders.Accept.Clear();
             _client.DefaultRequestHeaders.Accept.Add(
                 new MediaTypeWithQualityHeaderValue("application/json"));
-            Customer.CustomerIdCounter = 0;
-            Order.OrderCounter = 0;
-            Item.ItemCounter = 0;
-            PrepareItemsAndCustomers();
         }
 
 
         [Fact]
         public async void GivenNewOrderWithCustomerIdWithItemGroupWithoutShippingDatePriceWithAmountAndItemId_WhenCreatingMakingNewOrder_ThenReturnStatusCodeSuccess()
         {
+            Customer.CustomerIdCounter = 0;
+            Order.OrderCounter = 0;
+            Item.ItemCounter = 0;
+
+            ItemDTO newItemDTO1 = new ItemDTO()
+            {
+                AmountInStock = 5,
+                Price = 10.0,
+                Name = "Test1",
+                Description = "Test description1"
+            };
+
+            ItemDTO newItemDTO2 = new ItemDTO()
+            {
+                AmountInStock = 5,
+                Price = 10.0,
+                Name = "Test2",
+                Description = "Test description2"
+            };
+
+            var ItemJsonObject1 = JsonConvert.SerializeObject(newItemDTO1);
+            var stringContent1 = new StringContent(ItemJsonObject1, Encoding.UTF8, "application/json");
+            _client.DefaultRequestHeaders.Authorization = CreateBasicHeader("Admin", "AdminPassword");
+            var response1 = await _client.PostAsync("api/items", stringContent1);
+
+            var ItemJsonObject2 = JsonConvert.SerializeObject(newItemDTO2);
+            var stringContent2 = new StringContent(ItemJsonObject2, Encoding.UTF8, "application/json");
+            _client.DefaultRequestHeaders.Authorization = CreateBasicHeader("Admin", "AdminPassword");
+            var response2 = await _client.PostAsync("api/items", stringContent1);
+
+            CustomerDTO customerDTO = new CustomerDTO();
+            customerDTO.Firstname = "test";
+            customerDTO.Lastname = "test";
+            customerDTO.AdressOfCustomer = new Adress(1820, "Perk", "kerkstraat", 5);
+            customerDTO.Email = "xxx@test.com";
+            customerDTO.PhoneNumber = "04/72123456";
+            var customerJsonObject = JsonConvert.SerializeObject(customerDTO);
+            var stringContentCustomer = new StringContent(customerJsonObject, Encoding.UTF8, "application/json");
+            var responseCustomer = await _client.PostAsync("api/customers", stringContentCustomer);
             //Given
             ItemGroupDTO itemgroup1DTO = new ItemGroupDTO() { ItemId = 0, AmountOfThisItem = 2 };
             ItemGroupDTO itemGroup2DTO = new ItemGroupDTO() { ItemId = 1, AmountOfThisItem = 1 };
@@ -59,6 +94,45 @@ namespace Oder.IntegrationTests.Orders
         [Fact]
         public async void GivenNewOrderWithoutCustomerIdWithItemGroupWithoutShippingDatePriceWithAmountAndItemId_WhenCreatingMakingNewOrder_ThenReturnStatusCodeNotSuccess()
         {
+            Customer.CustomerIdCounter = 0;
+            Order.OrderCounter = 0;
+            Item.ItemCounter = 0;
+
+            ItemDTO newItemDTO1 = new ItemDTO()
+            {
+                AmountInStock = 5,
+                Price = 10.0,
+                Name = "Test1",
+                Description = "Test description1"
+            };
+
+            ItemDTO newItemDTO2 = new ItemDTO()
+            {
+                AmountInStock = 5,
+                Price = 10.0,
+                Name = "Test2",
+                Description = "Test description2"
+            };
+
+            var ItemJsonObject1 = JsonConvert.SerializeObject(newItemDTO1);
+            var stringContent1 = new StringContent(ItemJsonObject1, Encoding.UTF8, "application/json");
+            _client.DefaultRequestHeaders.Authorization = CreateBasicHeader("Admin", "AdminPassword");
+            var response1 = await _client.PostAsync("api/items", stringContent1);
+
+            var ItemJsonObject2 = JsonConvert.SerializeObject(newItemDTO2);
+            var stringContent2 = new StringContent(ItemJsonObject2, Encoding.UTF8, "application/json");
+            _client.DefaultRequestHeaders.Authorization = CreateBasicHeader("Admin", "AdminPassword");
+            var response2 = await _client.PostAsync("api/items", stringContent1);
+
+            CustomerDTO customerDTO = new CustomerDTO();
+            customerDTO.Firstname = "test";
+            customerDTO.Lastname = "test";
+            customerDTO.AdressOfCustomer = new Adress(1820, "Perk", "kerkstraat", 5);
+            customerDTO.Email = "xxx@test.com";
+            customerDTO.PhoneNumber = "04/72123456";
+            var customerJsonObject = JsonConvert.SerializeObject(customerDTO);
+            var stringContentCustomer = new StringContent(customerJsonObject, Encoding.UTF8, "application/json");
+            var responseCustomer = await _client.PostAsync("api/customers", stringContentCustomer);
             //Given
             ItemGroupDTO itemgroup1DTO = new ItemGroupDTO() { ItemId = 0, AmountOfThisItem = 2 };
             ItemGroupDTO itemGroup2DTO = new ItemGroupDTO() { ItemId = 1, AmountOfThisItem = 1 };
@@ -78,6 +152,45 @@ namespace Oder.IntegrationTests.Orders
         [Fact]
         public async void GivenNewOrderWithItemGroupWithShippingDateWithoutPriceWithAmountAndItemId_WhenCreatingMakingNewOrder_ThenReturnStatusCodeNotSuccess()
         {
+            Customer.CustomerIdCounter = 0;
+            Order.OrderCounter = 0;
+            Item.ItemCounter = 0;
+
+            ItemDTO newItemDTO1 = new ItemDTO()
+            {
+                AmountInStock = 5,
+                Price = 10.0,
+                Name = "Test1",
+                Description = "Test description1"
+            };
+
+            ItemDTO newItemDTO2 = new ItemDTO()
+            {
+                AmountInStock = 5,
+                Price = 10.0,
+                Name = "Test2",
+                Description = "Test description2"
+            };
+
+            var ItemJsonObject1 = JsonConvert.SerializeObject(newItemDTO1);
+            var stringContent1 = new StringContent(ItemJsonObject1, Encoding.UTF8, "application/json");
+            _client.DefaultRequestHeaders.Authorization = CreateBasicHeader("Admin", "AdminPassword");
+            var response1 = await _client.PostAsync("api/items", stringContent1);
+
+            var ItemJsonObject2 = JsonConvert.SerializeObject(newItemDTO2);
+            var stringContent2 = new StringContent(ItemJsonObject2, Encoding.UTF8, "application/json");
+            _client.DefaultRequestHeaders.Authorization = CreateBasicHeader("Admin", "AdminPassword");
+            var response2 = await _client.PostAsync("api/items", stringContent1);
+
+            CustomerDTO customerDTO = new CustomerDTO();
+            customerDTO.Firstname = "test";
+            customerDTO.Lastname = "test";
+            customerDTO.AdressOfCustomer = new Adress(1820, "Perk", "kerkstraat", 5);
+            customerDTO.Email = "xxx@test.com";
+            customerDTO.PhoneNumber = "04/72123456";
+            var customerJsonObject = JsonConvert.SerializeObject(customerDTO);
+            var stringContentCustomer = new StringContent(customerJsonObject, Encoding.UTF8, "application/json");
+            var responseCustomer = await _client.PostAsync("api/customers", stringContentCustomer);
             //Given
             ItemGroupDTO itemgroup1DTO = new ItemGroupDTO() { ItemId = 0, AmountOfThisItem = 2, ShippingDate = new DateTime() };
             ItemGroupDTO itemGroup2DTO = new ItemGroupDTO() { ItemId = 1, AmountOfThisItem = 1 };
@@ -102,6 +215,10 @@ namespace Oder.IntegrationTests.Orders
 
         private async void PrepareItemsAndCustomers()
         {
+            Customer.CustomerIdCounter = 0;
+            Order.OrderCounter = 0;
+            Item.ItemCounter = 0;
+
             ItemDTO newItemDTO1 = new ItemDTO()
             {
                 AmountInStock = 5,
