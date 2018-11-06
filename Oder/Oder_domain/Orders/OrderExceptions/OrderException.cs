@@ -2,7 +2,7 @@
 using System.Collections.Generic;
 using System.Text;
 
-namespace Oder.Services.Orders.OrderExceptions
+namespace Oder.Domain.Orders.OrderExceptions
 {
    public class OrderException : ApplicationException
     {

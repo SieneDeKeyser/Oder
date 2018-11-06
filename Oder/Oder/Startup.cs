@@ -13,9 +13,12 @@ using Microsoft.Extensions.Logging;
 using Microsoft.Extensions.Options;
 using Oder.Domain.Customers;
 using Oder.Domain.Items;
+using Oder.Domain.Orders;
 using Oder.Services;
 using Oder.Services.Customers;
+using Oder.Services.ItemGroups;
 using Oder.Services.Items;
+using Oder.Services.Orders;
 
 namespace Oder
 {
@@ -43,6 +46,11 @@ namespace Oder
             services.AddSingleton<IItemRepository, ItemRepository>()
                     .AddSingleton<IItemService, ItemService>()
                     .AddSingleton<IItemMapper, ItemMapper>();
+
+            services.AddSingleton<IOrderService, OrderService>()
+                    .AddSingleton<IOrderMapper, OrderMapper>()
+                    .AddSingleton<IItemGroupMapper, ItemGroupMapper>()
+                    .AddSingleton<IOrderRepository, OrderRepository>();
 
                     
         }

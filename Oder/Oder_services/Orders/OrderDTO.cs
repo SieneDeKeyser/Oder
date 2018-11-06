@@ -14,6 +14,7 @@ namespace Oder.Services.Orders
         public OrderDTO()
         {
             ItemGroupsDTO = new List<ItemGroupDTO>();
+            IdOfCustomer = -1;
         }
     }
 }

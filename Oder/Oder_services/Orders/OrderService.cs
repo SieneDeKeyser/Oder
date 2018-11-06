@@ -32,6 +32,7 @@ namespace Oder.Services.Orders
         {
             Order newOrder = new Order();
             newOrder = _orderMapper.FromOrderDTOToOrder(newOrderDTO);
+            
             newOrder.CustomerOfThisOrder = SearchCustomer(newOrderDTO.IdOfCustomer);
             foreach (var itemGroup in newOrder.ItemGroups)
             {
@@ -46,7 +47,7 @@ namespace Oder.Services.Orders
         private Customer SearchCustomer(int idCustomer)
         {
             Customer customerOfThisOrder = _customerRepository.GetCustomerById(idCustomer);
-            return null;
+            return customerOfThisOrder;
         }
     }
 }

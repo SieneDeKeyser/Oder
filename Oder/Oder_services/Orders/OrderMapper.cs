@@ -4,6 +4,7 @@ using System.Text;
 using Oder.Domain.Orders.ItemGroups;
 using Oder.Domain.Orders;
 using Oder.Services.ItemGroups;
+using Oder.Domain.Orders.OrderExceptions;
 
 namespace Oder.Services.Orders
 {
@@ -30,6 +31,10 @@ namespace Oder.Services.Orders
         public Order FromOrderDTOToOrder(OrderDTO orderDTOToMap)
         {
             Order orderToReturn = new Order();
+            if (orderDTOToMap.IdOfCustomer == -1 || orderDTOToMap.ItemGroupsDTO.Count == 0)
+            {
+                throw new OrderException();
+            }
             foreach (var itemgroupDTO in orderDTOToMap.ItemGroupsDTO)
             {
                 ItemGroup itemGroupFromThisOrder = _itemGroupMapper.FromItemGroupDTOToItemGroup(itemgroupDTO);

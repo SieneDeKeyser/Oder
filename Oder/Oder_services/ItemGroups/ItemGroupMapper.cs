@@ -2,7 +2,7 @@
 using System.Collections.Generic;
 using System.Text;
 using Oder.Domain.Orders.ItemGroups;
-using Oder.Services.Orders.OrderExceptions;
+using Oder.Domain.Orders.OrderExceptions;
 
 namespace Oder.Services.ItemGroups
 {

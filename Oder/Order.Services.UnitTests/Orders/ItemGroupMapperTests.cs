@@ -1,5 +1,5 @@
 ﻿using Oder.Services.ItemGroups;
-using Oder.Services.Orders.OrderExceptions;
+using Oder.Domain.Orders.OrderExceptions;
 using System;
 using System.Collections.Generic;
 using System.Text;

@@ -9,7 +9,7 @@ using Oder.Api.Controllers;
 using Oder.Domain.Orders.ItemGroups;
 using Oder.Services.ItemGroups;
 using Microsoft.AspNetCore.Mvc;
-using Oder.Services.Orders.OrderExceptions;
+using Oder.Domain.Orders.OrderExceptions;
 
 namespace Oder.Api.UnitTests.Orders
 {
