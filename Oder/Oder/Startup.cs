@@ -48,7 +48,8 @@ namespace Oder
             services.AddSingleton<IOrderService, OrderService>()
                     .AddSingleton<IOrderMapper, OrderMapper>()
                     .AddSingleton<IItemGroupMapper, ItemGroupMapper>()
-                    .AddSingleton<IOrderRepository, OrderRepository>();
+                    .AddSingleton<IOrderRepository, OrderRepository>()
+                    .AddSingleton<IOrderReportMapper, OrderReportMapper>();
 
                     
         }
