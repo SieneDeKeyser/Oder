@@ -17,16 +17,19 @@ namespace Oder.Services.Orders
         private readonly IItemRepository _itemRepository;
         private readonly ICustomerRepository _customerRepository;
         private readonly IOrderMapper _orderMapper;
+        private readonly IOrderReportMapper _orderReportMapper;
 
         public OrderService(IOrderRepository orderRepository,
                             IItemRepository itemRepository,
                             ICustomerRepository customerRepository,
-                            IOrderMapper orderMapper)
+                            IOrderMapper orderMapper,
+                            IOrderReportMapper orderReportMapper)
         {
             _itemRepository = itemRepository;
             _orderRepository = orderRepository;
             _customerRepository = customerRepository;
             _orderMapper = orderMapper;
+            _orderReportMapper = orderReportMapper;
         }
 
 
@@ -53,6 +56,13 @@ namespace Oder.Services.Orders
         public List<OrderDTO> GetAllOrders()
         {
             return _orderRepository.GetAllOrders().Select(order => { return _orderMapper.FromOrderToOrderDTO(order); }).ToList();
+        }
+
+        public OrderReportDTO GetOrdersOfCustomer(int id)
+        {
+            return _orderReportMapper.FromOrderReportToOrderReportDTO(_orderRepository.GetAllOrders()
+                                   .Where(order => order.IdOfCustomer == id)
+                                   .ToList());
         }
 
         private Customer SearchCustomer(int idCustomer)

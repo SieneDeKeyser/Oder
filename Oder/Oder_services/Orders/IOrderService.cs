@@ -8,5 +8,6 @@ namespace Oder.Services.Orders
     {
         OrderDTO CreateNewOrder(OrderDTO newOrderDTO);
         List<OrderDTO> GetAllOrders();
+        OrderReportDTO GetOrdersOfCustomer(int id);
     }
 }

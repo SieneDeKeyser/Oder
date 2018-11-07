@@ -4,15 +4,19 @@ using System;
 using System.Collections.Generic;
 using System.Text;
 using Xunit;
+using Oder.Domain.Items;
+using NSubstitute;
 
 namespace Oder.Services.UnitTests.Orders
 {
    public class ItemGroupMapperTests
     {
         private ItemGroupMapper _itemMapper;
+        private readonly IItemRepository _itemRepository;
         public ItemGroupMapperTests()
         {
-            _itemMapper = new ItemGroupMapper();
+            _itemRepository = Substitute.For<IItemRepository>();
+            _itemMapper = new ItemGroupMapper(_itemRepository);
         }
 
         [Fact]

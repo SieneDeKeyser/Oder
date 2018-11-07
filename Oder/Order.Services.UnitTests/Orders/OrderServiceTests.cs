@@ -17,6 +17,7 @@ namespace Oder.Services.UnitTests.Orders
         private IItemRepository _itemRepositoryStub;
         private IOrderRepository _orderRepositoryStub;
         private ICustomerRepository _customerRepositoryStub;
+        private IOrderReportMapper _orderReportMapperStub;
         private IOrderMapper _orderMapperStub;
         private OrderService _orderService;
 
@@ -26,6 +27,7 @@ namespace Oder.Services.UnitTests.Orders
             _itemRepositoryStub = Substitute.For<IItemRepository>();
             _customerRepositoryStub = Substitute.For<ICustomerRepository>();
             _orderMapperStub = Substitute.For<IOrderMapper>();
+            _orderReportMapperStub = Substitute.For<IOrderReportMapper>();
 
             _itemRepositoryStub.GetItemBasedOnId(0)
                .Returns(new Item()
@@ -47,7 +49,7 @@ namespace Oder.Services.UnitTests.Orders
 
             _customerRepositoryStub.GetCustomerById(0).Returns(new Customer(new CustomerBuilder()));
 
-            _orderService = new OrderService(_orderRepositoryStub, _itemRepositoryStub, _customerRepositoryStub, _orderMapperStub);
+            _orderService = new OrderService(_orderRepositoryStub, _itemRepositoryStub, _customerRepositoryStub, _orderMapperStub, _orderReportMapperStub);
         }
 
         [Fact]

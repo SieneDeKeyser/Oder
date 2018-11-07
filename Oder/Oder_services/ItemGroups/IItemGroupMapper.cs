@@ -9,5 +9,7 @@ namespace Oder.Services.ItemGroups
     {
         ItemGroup FromItemGroupDTOToItemGroup(ItemGroupDTO itemGroupDTO);
         ItemGroupDTO FromItemGroupToItemGroupDTO(ItemGroup itemGroupToMap);
+        ItemGroupDTOForInReport FromItemGroupToItemGroupDTOForInReport(ItemGroup itemGroupToMap);
+        
     }
 }

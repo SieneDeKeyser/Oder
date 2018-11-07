@@ -2,9 +2,12 @@
 using System.Collections.Generic;
 using System.Linq;
 using System.Threading.Tasks;
+using Microsoft.AspNetCore.Authorization;
 using Microsoft.AspNetCore.Mvc;
 using Microsoft.Extensions.Logging;
+using Oder.Domain.Customers;
 using Oder.Domain.Orders.OrderExceptions;
+using Oder.Services.Customers;
 using Oder.Services.Orders;
 
 // For more information on enabling Web API for empty projects, visit https://go.microsoft.com/fwlink/?LinkID=397860
@@ -25,7 +28,7 @@ namespace Oder.Api.Controllers
             _orderLogger = orderLogger;
         }
 
-        // GET: api/<controller>
+        [Authorize]
         [HttpGet]
         public ActionResult<List<OrderDTO>> GetAllOrders()
         {
@@ -45,6 +48,12 @@ namespace Oder.Api.Controllers
                 _orderLogger.LogInformation(ex.Message);
                 return BadRequest(ex.Message);
             }
+        }
+
+        [HttpGet]
+        public ActionResult<OrderReportDTO> GetOrdersOfCustomer([FromBody] CustomerDTO customerToCheck)
+        {
+            return Ok(_orderService.GetOrdersOfCustomer(customerToCheck.Id));
         }
 
 
